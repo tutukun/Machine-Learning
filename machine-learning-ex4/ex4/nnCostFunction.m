@@ -82,8 +82,8 @@ Delta2 += delta3_i * a2';
 
 endfor
 
-Theta1_grad = (1 / m) * Delta1;
-Theta2_grad = (1 / m) * Delta2;
+Theta1_grad = (1 / m) * ([Delta1(:,1), (Delta1 + lambda * Theta1)(:,2:end)]);
+Theta2_grad = (1 / m) * ([Delta2(:,1), (Delta2 + lambda * Theta2)(:,2:end)]);
 
 grad = [Theta1_grad(:); Theta2_grad(:)];
 J = (-1/m) * J_total;
@@ -98,24 +98,8 @@ J = (-1/m) * J_total;
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-%r = sum([(Theta1(:, 2:end) .^ 2)(:); (Theta2(:, 2:end) .^ 2)(:)]);
-%J = (-1/m) * J_total + (lambda /(2*m))*r;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+r = sum([(Theta1(:, 2:end) .^ 2)(:); (Theta2(:, 2:end) .^ 2)(:)]);
+J += (lambda /(2*m))*r;
 
 
 % -------------------------------------------------------------
@@ -123,7 +107,7 @@ J = (-1/m) * J_total;
 % =========================================================================
 
 % Unroll gradients
-grad = [Theta1_grad(:) ; Theta2_grad(:)];
+
 
 
 end
