@@ -72,15 +72,21 @@ J_total += J_i;
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
-%delta3_i = a3 - y_i;
 
-%gz2 = a2 .* (1 - a2);
-%delta2_i = (Theta2' * delta3_i .* gz2)(2:end);
+delta3_i = a3 - y_i;
+gz2 = a2 .* ( 1 - a2);
+delta2_i = (Theta2'  * delta3_i .* gz2)(2:end);
 
-%Delta1 += a2 * a1';
-%Delta2 += a3 * a2';
+Delta1 += delta2_i * a1';
+Delta2 += delta3_i * a2';
 
 endfor
+
+Theta1_grad = (1 / m) * Delta1;
+Theta2_grad = (1 / m) * Delta2;
+
+grad = [Theta1_grad(:); Theta2_grad(:)];
+J = (-1/m) * J_total;
 
 %Theta1_grad = (1/m) * (Delta1 + lambda * Theta1);
 %Theta2_grad = (1/m) * (Delta2 + lambda * Theta2);
@@ -92,8 +98,8 @@ endfor
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-r = sum([(Theta1(:, 2:end) .^ 2)(:); (Theta2(:, 2:end) .^ 2)(:)]);
-J = (-1/m) * J_total + (lambda /(2*m))*r;
+%r = sum([(Theta1(:, 2:end) .^ 2)(:); (Theta2(:, 2:end) .^ 2)(:)]);
+%J = (-1/m) * J_total + (lambda /(2*m))*r;
 
 
 
