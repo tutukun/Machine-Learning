@@ -26,6 +26,17 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+for j=1:K
+  points = double(idx == j);
+  Ck = sum(points);
+  points_set = [];
+  for i =1:n
+    points_set = [points_set points];
+  end
+  
+  centroids(j,:) = sum(X .* points_set) ./ Ck;
+end
+
 
 
 
